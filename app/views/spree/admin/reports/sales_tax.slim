@@ -1,0 +1,22 @@
+- content_for :page_title do 
+  = 'Sales Tax Report'
+
+- content_for :page_actions do
+  li = link_to_with_icon 'arrow-left', 'Back To Reports List', spree.admin_reports_url, class: 'button'
+
+- content_for :table_filter_title do
+  = Spree.t(:date_range)
+
+- content_for :table_filter do 
+  = render :partial => 'report_order_criteria', :locals => {}
+
+table.admin-report data-hook="sales_tax"
+  thead
+    tr
+      th = 'Sales Tax'
+      th = 'Sales Tax Total'
+  tbody
+    - @totals.each do |key, row|
+      tr.align-center
+        td = key
+        td = number_to_currency row
