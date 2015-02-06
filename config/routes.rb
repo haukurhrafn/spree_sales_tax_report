@@ -1,4 +1,4 @@
-Spree::Core::Engine.routes.prepend do  
+Spree::Core::Engine.routes.append do  
   namespace :admin do
     resources :reports, :only => [:index, :show] do  # <= add this block
       collection do
