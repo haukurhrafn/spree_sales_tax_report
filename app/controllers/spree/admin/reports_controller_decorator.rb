@@ -11,6 +11,8 @@ Spree::Admin::ReportsController.class_eval do
 
     @adjustments = Spree::Adjustment.where("adjustable_type = 'Spree::Order' and created_at >= '#{params[:q][:completed_at_gt].to_s(:db)}' and created_at <= '#{params[:q][:completed_at_lt]}'")
 
+    @refunds = Spree::Refund.where("created_at >= ? and created_at <= ?", params[:q][:completed_at_gt], params[:q][:completed_at_lt])
+
     @totals = {}
 
 
@@ -18,6 +20,7 @@ Spree::Admin::ReportsController.class_eval do
     @totals['Taxable Sales'] = @orders.select(&:has_additional_tax?).sum(&:item_total)
     @totals['Taxes Collected'] =  @orders.sum(:additional_tax_total)
     @totals['Adjustments'] = @adjustments.sum(:amount)
+    @totals['Refunds'] = @refunds.sum(:amount)
 
     # @adjustments = Spree::Adjustment.
     
