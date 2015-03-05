@@ -15,6 +15,7 @@ Spree::Admin::ReportsController.class_eval do
 
 
     @totals['Gross Sales']   = @orders.sum(:item_total)
+    @totals['Gross Sales (Adjusted)'] = @orders.sum(:item_total) - @adjustments.sum(:amount)
     @totals['Taxable Sales'] = @orders.select(&:has_additional_tax?).sum(&:item_total)
     @totals['Taxes Collected'] =  @orders.sum(:additional_tax_total)
     @totals['Adjustments'] = @adjustments.sum(:amount)
